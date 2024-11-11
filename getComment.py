@@ -3,6 +3,8 @@ import requests
 import re
 import streamlit as st
 
+YT_API_KEY=st.secrets["YT_API_KEY"]
+
 def get_chat_id(yt_url):
     '''
     https://developers.google.com/youtube/v3/docs/videos/list?hl=ja
