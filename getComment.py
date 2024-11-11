@@ -50,12 +50,12 @@ def get_chat(chat_id, pageToken):
             # supChat   = item['snippet']['superChatDetails']
             # supStic   = item['snippet']['superStickerDetails']
             # log_text  = '[by {}  https://www.youtube.com/channel/{}]\n  {}'.format(usr, channelId, msg)
-            if msg.startswith(('req','rq','リク')):
-                msg=re.sub(r'req\s*','', msg)
+            if msg.startswith(('rq','Rq','RQ')):
                 msg=re.sub(r'rq\s*','', msg)
-                msg=re.sub(r'リク\s.*','', msg)
+                msg=re.sub(r'Rq\s*','', msg)
+                msg=re.sub(r'RQ\s*','', msg)
 
-                st.session_state.list.append(msg+" by"+usr)
+                st.session_state.list.append(msg+"  by "+usr)
                 st.session_state.addnum+=1
         # print('start : ', data['items'][0]['snippet']['publishedAt'])
         # print('last_date   : ', data['items'][-1]['snippet']['publishedAt'])
@@ -77,7 +77,7 @@ def main():
     slp_time        = 30 #sec
 
     st.title('リクエスト')
-    st.subheader('rq/req/リクを先頭につけてリクエストしよう') 
+    st.subheader('rqを先頭につけてリクエストしよう') 
     delete = st.button('先頭を消す')
     whileloop = st.toggle("更新開始/停止")
     place = st.empty()
@@ -96,21 +96,6 @@ def main():
         except:
             pass
     rewrite_sl(place)
-    
-    # print('{}分後　終了予定'.format(take_time))
-    # print('work on {}'.format(yt_url))
-
-
-    
-    # for ii in range(iter_times):
-    #     #for jj in [0]:
-    #     try:
-    #         nextPageToken = get_chat(chat_id, nextPageToken, log_file)
-    #         thread = threading.Thread(target=wait,args=(slp_time,))
-    #         thread.start()
-    #         thread.join()
-    #     except:
-    #         break
 
 if __name__ == '__main__':
     if 'chat_id' not in st.session_state:
