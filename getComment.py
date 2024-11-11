@@ -3,9 +3,6 @@ import requests
 import re
 import streamlit as st
 
-#事前に取得したYouTube API key
-YT_API_KEY = 'AIzaSyAvOmdfp9OK7v0D4e5EJBSB2PoDoDeP_bE'
-
 def get_chat_id(yt_url):
     '''
     https://developers.google.com/youtube/v3/docs/videos/list?hl=ja
