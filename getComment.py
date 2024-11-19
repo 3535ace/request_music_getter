@@ -50,15 +50,12 @@ def get_chat(chat_id, pageToken):
             # supChat   = item['snippet']['superChatDetails']
             # supStic   = item['snippet']['superStickerDetails']
             # log_text  = '[by {}  https://www.youtube.com/channel/{}]\n  {}'.format(usr, channelId, msg)
-            if msg.startswith(('rq','Rq','RQ')):
+            if msg.startswith(('req','rq')):
+                msg=re.sub(r'req\s*','', msg)
                 msg=re.sub(r'rq\s*','', msg)
-                msg=re.sub(r'Rq\s*','', msg)
-                msg=re.sub(r'RQ\s*','', msg)
 
-                st.session_state.list.append(msg+"  by "+usr)
+                st.session_state.list.append(msg+" by "+usr)
                 st.session_state.addnum+=1
-        # print('start : ', data['items'][0]['snippet']['publishedAt'])
-        # print('last_date   : ', data['items'][-1]['snippet']['publishedAt'])
 
     except:
         pass
@@ -68,8 +65,25 @@ def get_chat(chat_id, pageToken):
 def rewrite_sl(place):
     text=""
     for i in range(len(st.session_state.list)):
-        text=text+'\\\n'+st.session_state.list[i]
-    place.write(text)
+        text=text+'<br>'+str(i+1)+' : '+st.session_state.list[i]
+    # place.write(text)
+    st.markdown(
+    """
+    <style>
+    .custom {
+        font-size: 32px;
+        color: white;
+        text-shadow:
+        -1px -1px 0 #000,  
+        1px -1px 0 #000,
+        -1px 1px 0 #000,
+        1px 1px 0 #000;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+    )
+    place.markdown('<div class="custom">'+text+'</div>',unsafe_allow_html=True)
     return
 
 def main():
@@ -99,6 +113,9 @@ def main():
 
 if __name__ == '__main__':
     if 'chat_id' not in st.session_state:
+        st.set_page_config(
+            layout="wide"
+        )
         st.session_state.chat_id=None
     while st.session_state.chat_id is None:
         # yt_url = input('Input YouTube URL > ')
